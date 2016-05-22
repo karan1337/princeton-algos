@@ -4,34 +4,55 @@
 
 public class QuickFind implements unionfind{
 
-    int arr[];
+    int id[];
     int n;
 
     public QuickFind(int N) {
         this.n = N;
-        arr = new int[N];
+        id = new int[N];
         //every site is connected to itself initially
         for(int i=0; i<N; i++){
-            arr[i] = i;
+            id[i] = i;
         }
     }
 
     public void union(int p, int q) {
-    
+        int pid = find(p);
+        int qid = find(q);
+
+        for(int i=0; i<n; i++){
+            if(id[i] == pid){
+                id[i] = qid;
+            }
+        }
     }
 
     @Override
     public int find(int p) {
-        return 0;
+        return id[p];
     }
 
     @Override
     public boolean connected(int p, int q) {
-        return false;
+        return (id[p] == id[q]);
     }
 
     @Override
     public int count() {
-        return 0;
+        int num = 0;
+        //doesnt scale well (use perfect hashing for scalability)
+        for(int i=0; i<n; i++) {
+            int found = 0;
+            for (int j = 0; j < n; j++) {
+                if (id[i] == id[j]) {
+                    found = 1;
+                    break;
+                }
+            }
+            if(found == 0){
+                num++;
+            }
+        }
+        return num;
     }
 };
