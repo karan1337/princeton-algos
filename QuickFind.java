@@ -40,10 +40,10 @@ public class QuickFind implements unionfind{
     @Override
     public int count() {
         int num = 0;
-        //doesnt scale well (use perfect hashing for scalability)
+        //does not scale well (use perfect hashing for scalability)
         for(int i=0; i<n; i++) {
             int found = 0;
-            for (int j = 0; j < n; j++) {
+            for (int j = 0; j < n && i!=j; j++) {
                 if (id[i] == id[j]) {
                     found = 1;
                     break;
@@ -54,5 +54,12 @@ public class QuickFind implements unionfind{
             }
         }
         return num;
+    }
+
+    public void printIDs(){
+        for(int i=0; i<n; i++){
+            System.out.print(id[i] + " ");
+        }
+        System.out.println();
     }
 };
