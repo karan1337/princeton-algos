@@ -1,2 +1,5 @@
 #MAC OSX finder file
 .DS_Store
+
+#Compiled files
+.class
