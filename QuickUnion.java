@@ -17,9 +17,12 @@ public class QuickUnion implements unionfind {
 
     @Override
     public void union(int p, int q) {
+
+        //find roots of p and q
         int rootp = find(p);
         int rootq = find(q);
 
+        //set q as the root of p
         id[rootp] = rootq;
 
     }

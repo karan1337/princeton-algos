@@ -23,10 +23,12 @@ public class QuickUnionWeighted implements unionfind {
         int rootp = find(p);
         int rootq = find(q);
 
+        //if second tree has more elements than the first one, make the first tree a child of the second one
         if(sz[rootq] > sz[rootp]){
             id[rootp] = rootq;
             sz[rootq] += sz[rootp];
         }
+        //default case: if second tree has less or equal elements than the first, make the second tree a child of the tree
         else{
             id[rootq] = rootp;
             sz[rootp] += sz[rootq];
