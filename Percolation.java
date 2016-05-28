@@ -1,19 +1,15 @@
 /**
  * Created by Karan on 5/25/16.
  */
-import edu.princeton.cs.algs4.StdRandom;
-import edu.princeton.cs.algs4.StdStats;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
     private int id[][];
-    int n;
-    public WeightedQuickUnionUF wqf;
-    int virtualtoppt=-1;
-    int virtualbottompt = -1;
+    private int n;
+    private WeightedQuickUnionUF wqf;
 
-    public boolean isValid(int i, int j){
-        if(i < n && j<n && i>=0 && j>=0){
+    private boolean isValid(int i, int j){
+        if(i < n & j<n & i>0 & j>0){
             return true;
         }
         else{
@@ -25,7 +21,6 @@ public class Percolation {
 
         if(N<=0){
             throw new IllegalArgumentException(N+"");
-
         }
 
         this.n = N+1;
@@ -40,12 +35,13 @@ public class Percolation {
 
         wqf = new WeightedQuickUnionUF(xyTo1D(this.n,this.n));
 
+        /*
         //connect all top row elements to the top virtual point (0,0)
         this.virtualtoppt = xyTo1D(0,0);
 
         //connect all bottom row elements to the bottom virtual point (n-1,0)
         this.virtualbottompt = xyTo1D(n-1,0);
-
+        */
     }
 
     public void open(int i, int j){
@@ -57,10 +53,12 @@ public class Percolation {
         int newpoint = xyTo1D(i,j);
 
         if(i==1){
+            int virtualtoppt = xyTo1D(0,0);
             wqf.union(newpoint,virtualtoppt);
         }
 
         if(i==n-1){
+            int virtualbottompt = xyTo1D(n-1,0);
             wqf.union(newpoint,virtualbottompt);
         }
         //call union 4 times for each surrounding point (i-1,j), (i,j-1), (i,j+1), (i+1,j)
@@ -93,17 +91,20 @@ public class Percolation {
             throw new IllegalArgumentException(i+","+j);
         }
 
+
         if(id[i][j] == 1){
             return true;
         }
         else{
             return false;
         }
+
     }
 
     //convert 2d point into 1d
-    public int xyTo1D(int i, int j){
-        return (i*(n+1) + j*(n+2));
+    private int xyTo1D(int i, int j){
+        //return (i*(n+1) + j*(n+2));
+        return i*n+j;
     }
 
     public boolean isFull(int i, int j){
@@ -113,11 +114,13 @@ public class Percolation {
         }
 
         int newpoint = xyTo1D(i,j);
-        return wqf.connected(newpoint, this.virtualtoppt);
+        int virtualtoppt = xyTo1D(0,0);
+        return wqf.connected(newpoint, virtualtoppt);
     }
 
     public boolean percolates(){
-
+        int virtualtoppt = xyTo1D(0,0);
+        int virtualbottompt = xyTo1D(n-1,0);
         return wqf.connected(virtualbottompt, virtualtoppt);
     }
 };
