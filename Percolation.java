@@ -43,24 +43,9 @@ public class Percolation {
         //connect all top row elements to the top virtual point (0,0)
         this.virtualtoppt = xyTo1D(0,0);
 
-        /*
-        for(int j=1; j<this.n; j++) {
-            //int newpoint = xyTo1D(0, j);
-            int newpoint = xyTo1D(1, j);
-            wqf.union(newpoint,virtualtoppt);
-        }
-        */
-
-        //connect all bottom row elements to the bottom virtual point (0,0)
-        //this.virtualbottompt = xyTo1D(0,n-1);
+        //connect all bottom row elements to the bottom virtual point (n-1,0)
         this.virtualbottompt = xyTo1D(n-1,0);
 
-        /*
-        for(int j=1; j<this.n; j++) {
-            int newpoint = xyTo1D(this.n-1,j);
-            wqf.union(newpoint,virtualbottompt);
-        }
-        */
     }
 
     public void open(int i, int j){
