@@ -8,12 +8,12 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 public class Percolation {
     private int id[][];
     int n;
-    WeightedQuickUnionUF wqf;
+    public WeightedQuickUnionUF wqf;
     int virtualtoppt=-1;
     int virtualbottompt = -1;
 
     public boolean isValid(int i, int j){
-        if(i < n & j<n & i>=0 & j>=0){
+        if(i < n && j<n && i>=0 && j>=0){
             return true;
         }
         else{
@@ -38,22 +38,29 @@ public class Percolation {
             }
         }
 
-        wqf = new WeightedQuickUnionUF(n*n);
+        wqf = new WeightedQuickUnionUF(xyTo1D(this.n,this.n));
 
         //connect all top row elements to the top virtual point (0,0)
         this.virtualtoppt = xyTo1D(0,0);
-        for(int j=1; j<n; j++) {
-            int newpoint = xyTo1D(0,j);
+
+        /*
+        for(int j=1; j<this.n; j++) {
+            //int newpoint = xyTo1D(0, j);
+            int newpoint = xyTo1D(1, j);
             wqf.union(newpoint,virtualtoppt);
         }
+        */
 
         //connect all bottom row elements to the bottom virtual point (0,0)
-        this.virtualbottompt = xyTo1D(0,n-1);
-        for(int j=1; j<n; j++) {
-            int newpoint = xyTo1D(n-1,j);
+        //this.virtualbottompt = xyTo1D(0,n-1);
+        this.virtualbottompt = xyTo1D(n-1,0);
+
+        /*
+        for(int j=1; j<this.n; j++) {
+            int newpoint = xyTo1D(this.n-1,j);
             wqf.union(newpoint,virtualbottompt);
         }
-
+        */
     }
 
     public void open(int i, int j){
@@ -63,6 +70,14 @@ public class Percolation {
         id[i][j] = 1;
 
         int newpoint = xyTo1D(i,j);
+
+        if(i==1){
+            wqf.union(newpoint,virtualtoppt);
+        }
+
+        if(i==n-1){
+            wqf.union(newpoint,virtualbottompt);
+        }
         //call union 4 times for each surrounding point (i-1,j), (i,j-1), (i,j+1), (i+1,j)
 
         //up
@@ -102,7 +117,7 @@ public class Percolation {
     }
 
     //convert 2d point into 1d
-    private int xyTo1D(int i, int j){
+    public int xyTo1D(int i, int j){
         return (i*(n+1) + j*(n+2));
     }
 
